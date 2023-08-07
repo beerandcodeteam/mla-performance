@@ -22,11 +22,17 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Advisor::factory()
-            ->count(20)
-            ->has(User::factory()
-                ->has(Order::factory()->count(500))
-                ->count(15))
-            ->create();
+//        Advisor::factory()
+//            ->count(20)
+//            ->has(User::factory()
+//                ->has(Order::factory()->count(500))
+//                ->count(15))
+//            ->create();
+
+
+        $users = User::with('orders')->get();
+        $users->each(function($user) {
+            $user->update(['last_order_id' => $user->orders->sortByDesc('created_at')->first()->id]);
+        });
     }
 }

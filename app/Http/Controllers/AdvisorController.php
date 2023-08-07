@@ -14,11 +14,11 @@ class AdvisorController extends Controller
      */
     public function index(): View
     {
-        $advisors = User::with('advisor')
+        $users = User::with('advisor', 'lastOrder')
             ->orderBy('name')
             ->paginate();
 
 
-        return view('advisors.index', ['advisors' => $advisors]);
+        return view('advisors.index', ['users' => $users]);
     }
 }
