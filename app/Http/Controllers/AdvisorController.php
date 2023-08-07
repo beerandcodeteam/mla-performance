@@ -14,11 +14,18 @@ class AdvisorController extends Controller
      */
     public function index(): View
     {
-        $advisors = User::with('advisor')
+        $users = User::
+        with('advisor')
+            ->addSelect(['last_order_at' => Order::select('created_at')
+                ->whereColumn('user_id', 'users.id')
+                ->latest()
+                ->take(1)
+            ])
+            ->withCasts(['last_order_at' => 'datetime'])
             ->orderBy('name')
             ->paginate();
 
 
-        return view('advisors.index', ['advisors' => $advisors]);
+        return view('advisors.index', ['users' => $users]);
     }
 }
