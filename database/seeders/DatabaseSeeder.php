@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Advisor;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -22,8 +23,10 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Advisor::factory()
-            ->count(1000)
-            ->has(User::factory()->count(15))
+            ->count(20)
+            ->has(User::factory()
+                ->has(Order::factory()->count(500))
+                ->count(15))
             ->create();
     }
 }

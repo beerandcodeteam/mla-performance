@@ -10,7 +10,7 @@ class Advisor extends Model
 {
     use HasFactory;
 
-    protected $with = ['users'];
+    //protected $with = ['users'];
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
