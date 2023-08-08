@@ -22,12 +22,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-//        Advisor::factory()
-//            ->count(20)
-//            ->has(User::factory()
-//                ->has(Order::factory()->count(500))
-//                ->count(15))
-//            ->create();
+        Advisor::factory()
+            ->count(20)
+            ->has(User::factory()
+                ->has(Order::factory()->count(500))
+                ->count(15))
+            ->create();
 
 
         $users = User::with('orders')->get();

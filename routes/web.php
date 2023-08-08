@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/advisors', [AdvisorController::class, 'index']);
+Route::get('/dashboard', [AdvisorController::class, 'dashboard']);
