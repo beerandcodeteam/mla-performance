@@ -49,11 +49,11 @@
                             <tbody class="divide-y divide-gray-200 bg-white">
                             @foreach($users as $user)
                                 <tr>
-                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $user->name }}</td>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ "{$user->first_name} {$user->last_name}" }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->advisor->name }}</td>
 {{--                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->orders()->latest()->first()->created_at->diffForHumans() }}</td>--}}
 {{--                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->orders->sortByDesc('created_at')->first()->created_at->diffForHumans() }}</td>--}}
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->lastOrder->created_at->diffForHumans() }}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->lastOrder?->created_at?->diffForHumans() }}</td>
                                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                         <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only"></span></a>
                                     </td>

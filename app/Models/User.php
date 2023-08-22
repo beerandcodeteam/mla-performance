@@ -58,4 +58,21 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function scopeSearch($query, $search = null)
+    {
+        //Joaquin Bernier Schaefer
+        //["Joaquin", "Bernier", "Schaefer"]
+        collect(explode(' ', $search))->filter()->each(function($term) use ($query){
+            $term = $term."%";
+            $query->where(function($query) use ($term){
+                $query->where('first_name', 'like', $term)
+                    ->orWhere('last_name', 'like', $term)
+                    ->orWhereIn('advisor_id', Advisor::query()
+                        ->where('name', 'like', $term)
+                        ->pluck('id')
+                    );
+            });
+        });
+    }
 }

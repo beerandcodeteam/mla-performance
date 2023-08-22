@@ -16,8 +16,8 @@ class AdvisorController extends Controller
     public function index(Request $request): View
     {
         $users = User::with('advisor:id,name', 'lastOrder:id,created_at')
-            ->select("id", "name", "advisor_id", "last_order_id")
-            ->orderBy('name')
+            ->select("id", "first_name", "last_name", "advisor_id", "last_order_id")
+            ->search($request->search)
             ->paginate();
 
         return view('advisors.index', ['users' => $users]);

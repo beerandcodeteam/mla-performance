@@ -23,10 +23,10 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Advisor::factory()
-            ->count(20)
+            ->count(100)
             ->has(User::factory()
-                ->has(Order::factory()->count(10))
-                ->count(15))
+                ->has(Order::factory()->count(1))
+                ->count(1000))
             ->create();
 
 
