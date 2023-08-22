@@ -13,7 +13,7 @@ class AdvisorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         $users = User::with('advisor:id,name', 'lastOrder:id,created_at')
             ->select("id", "name", "advisor_id", "last_order_id")

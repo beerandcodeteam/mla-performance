@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/advisors', [AdvisorController::class, 'index']);
+Route::get('/advisors', [AdvisorController::class, 'index'])->name("advisors.index");
 Route::get('/dashboard', [AdvisorController::class, 'dashboard']);
