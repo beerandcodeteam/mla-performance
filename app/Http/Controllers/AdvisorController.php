@@ -15,10 +15,10 @@ class AdvisorController extends Controller
      */
     public function index(): View
     {
-        $users = User::with('advisor', 'lastOrder')
+        $users = User::with('advisor:id,name', 'lastOrder:id,created_at')
+            ->select("id", "name", "advisor_id", "last_order_id")
             ->orderBy('name')
             ->paginate();
-
 
         return view('advisors.index', ['users' => $users]);
     }
