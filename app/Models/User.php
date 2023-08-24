@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -59,20 +62,15 @@ class User extends Authenticatable
         return $this->belongsTo(Order::class);
     }
 
-    public function scopeSearch($query, $search = null)
+    #[SearchUsingPrefix(['id', 'email'])]
+    #[SearchUsingFullText(['first_name', 'last_name'])]
+    public function toSearchableArray()
     {
-        //Joaquin Bernier Schaefer
-        //["Joaquin", "Bernier", "Schaefer"]
-        collect(explode(' ', $search))->filter()->each(function($term) use ($query){
-            $term = $term."%";
-            $query->where(function($query) use ($term){
-                $query->where('first_name', 'like', $term)
-                    ->orWhere('last_name', 'like', $term)
-                    ->orWhereIn('advisor_id', Advisor::query()
-                        ->where('name', 'like', $term)
-                        ->pluck('id')
-                    );
-            });
-        });
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name
+        ];
     }
 }
